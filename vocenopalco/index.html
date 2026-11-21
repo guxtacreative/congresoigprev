@@ -284,4 +284,30 @@ img{max-width:100%}
   },{passive:true});
 })();
 </script>
+<!-- ===== MEDIÇÃO (Meta Pixel + Google), carregada só depois do aceite de cookies ===== -->
+<div class="ck-cg" id="ckcg" hidden role="region" aria-label="Aviso de cookies"><p>Usamos cookies para medir visitas e melhorar a divulgação do congresso.</p><div><button type="button" data-ck="n">Recusar</button><button type="button" data-ck="y" class="ok">Aceitar</button></div></div>
+<style>.ck-cg{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;max-width:560px;margin:0 auto;background:#0A1734;border:1px solid #1A2C55;color:#C9D3E6;border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 12px 32px rgba(0,0,0,.45);font:14px/1.45 Arial,Helvetica,sans-serif}.ck-cg[hidden]{display:none}.ck-cg p{margin:0;flex:1 1 240px}.ck-cg div{display:flex;gap:8px}.ck-cg button{font:700 13px Arial,Helvetica,sans-serif;border-radius:999px;padding:10px 16px;cursor:pointer;border:1px solid #1A2C55;background:transparent;color:#C9D3E6}.ck-cg .ok{background:#2F7BFF;border-color:#2F7BFF;color:#fff}</style>
+<script>
+(function(){
+var META_PIXEL_ID="3376576619188458";
+var GOOGLE_ID="";   /* cole aqui o código G-XXXXXXX ou GTM-XXXXXXX do Analytics do IGPREV */
+var K="cg_ck",on=false,b=document.getElementById("ckcg");
+function get(){try{return localStorage.getItem(K)}catch(e){return null}}
+function set(v){try{localStorage.setItem(K,v)}catch(e){}}
+function load(){if(on)return;on=true;
+ if(META_PIXEL_ID){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",META_PIXEL_ID);fbq("track","PageView")}
+ if(GOOGLE_ID){var g=document.createElement("script");g.async=true;g.src="https://www.googletagmanager.com/gtag/js?id="+GOOGLE_ID;document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());if(!/^GTM-/.test(GOOGLE_ID))gtag("config",GOOGLE_ID)}}
+function ev(ga,meta,p){try{if(window.gtag)gtag("event",ga,p||{})}catch(e){}try{if(window.fbq&&meta)fbq(meta[0],meta[1],p||{})}catch(e){}}
+var c=get();if(c==="y")load();else if(c!=="n")setTimeout(function(){b.hidden=false},2000);
+b.addEventListener("click",function(e){var x=e.target.closest("[data-ck]");if(!x)return;set(x.dataset.ck);b.hidden=true;if(x.dataset.ck==="y")load()});
+/* leva as UTMs da campanha até a Ticket Arena */
+var q=location.search.match(/utm_[a-z]+=[^&]+/g);
+document.querySelectorAll('a[href*="ticketarena.com.br"]').forEach(function(a){if(q)a.href=a.href+(a.href.indexOf("?")<0?"?":"&")+q.join("&")});
+document.addEventListener("click",function(e){var a=e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";
+ if(/ticketarena\.com\.br/.test(h))ev("begin_checkout",["track","InitiateCheckout"],{content_name:"Ingresso Disrupção 2ª edição",currency:"BRL"});
+ else if(/edital|formulario-concurso/.test(h))ev("download_edital",["trackCustom","BaixouEdital"],{arquivo:h.split("/").pop()});
+ else if(/^mailto:/.test(h))ev("generate_lead",["track","Lead"],{content_name:"Submissão Você no Palco"});
+ else if(/wa\.me|whatsapp\.com/.test(h))ev("contato_whatsapp",["track","Contact"]);},true);
+})();
+</script>
 </body></html>
